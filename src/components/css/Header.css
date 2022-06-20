@@ -1,0 +1,17 @@
+h1, h2 {
+    text-align: center;
+}
+
+header {
+    display: block;
+    padding: 10px;
+    border-radius: 16px;
+    background-color: #03040b;
+    color: white;
+}
+
+nav > ul > li {
+    display: inline;
+    padding: 8px;
+}
+

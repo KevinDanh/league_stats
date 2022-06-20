@@ -1,24 +1,40 @@
-import logo from './logo.svg';
-import './App.css';
+import { useEffect, useState } from 'react';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import Header from './components/Header';
+import Footer from './components/Footer';
+import About from './components/About';
+import {fetchChampions} from './middleware/server';
+import Champions from './components/Champions'
 
 function App() {
+  const [champions, setChampions] = useState([]);
+
+  useEffect(() => {
+    const getChampions = async () => {
+      const championsFromServer = await fetchChampions();
+      setChampions(championsFromServer);
+    }
+    getChampions()
+  }, []);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Router>
+      <Header></Header>
+      <Routes>
+        <Route
+          path='/'
+          element={
+            <div className='container'>
+              <Champions champions={champions}></Champions>
+            </div>
+          }
+        />
+
+        <Route path='/about' element={<About />} />
+
+      </Routes>
+      <Footer />
+    </Router>
   );
 }
 
